@@ -14,7 +14,9 @@ body {
 
 h1,
 h2,
-h3 {
+h3,
+h4,
+h5 {
   font-family: 'Georgia', serif;
   color: #D4AF37;
 }
@@ -410,6 +412,209 @@ nav ul {
   margin: 0.2rem 0;
 }
 
+.catalog {
+  padding: 3rem 2rem;
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.catalog-title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.catalog-card {
+  height: 420px;
+  position: relative;
+}
+
+.card-image-wrapper img {
+  width: 100%;
+  height: 85%;
+  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.card-image-wrapper .card-name {
+  padding: 0.75rem;
+  text-align: center;
+  flex-shrink: 0;
+  height: 15%;
+  box-sizing: border-box;
+}
+
+.catalog-card:hover .card-image-wrapper img {
+  transform: scale(1.1);
+}
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(13, 27, 42, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+.catalog-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.catalog-card:hover .card-name {
+  display: none;
+}
+
+.stock-label {
+  font-size: 0.9rem;
+  margin: 0.2rem 0;
+}
+
+.stock-label.in-stock {
+  color: #28A745;
+}
+
+.stock-label.out-of-stock {
+  color: #DC3545;
+}
+
+.product-detail {
+  margin: 3rem 0;
+}
+
+.product-detail h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.detail-layout {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.detail-image {
+  flex: 1;
+  max-width: 400px;
+  overflow: hidden;
+}
+
+.detail-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.detail-image:hover img {
+  transform: scale(1.2);
+}
+
+.details-info {
+  flex: 1;
+  max-width: 600px;
+}
+
+.details-info h4 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.details-info p {
+  margin: 0.5rem 0;
+}
+
+.customization-options {
+  margin-top: 1.5rem;
+}
+
+.customization-options h5 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.customization-options ul {
+  list-style: none;
+  margin: 0.5rem 0;
+}
+
+.customization-options ul li {
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+}
+
+.related-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding: 1rem;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+.related-item {
+  position: relative;
+  min-width: 200px;
+  height: 150px;
+  overflow: hidden;
+  border: 1px solid #D4AF37;
+  flex-shrink: 0;
+}
+
+.related-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.related-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(13, 27, 42, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.related-item:hover .related-overlay {
+  opacity: 1;
+}
+
+.related-overlay h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.related-overlay p {
+  font-size: 0.9rem;
+}
+
 .contact {
   padding: 3rem 2rem;
   text-align: center;
@@ -765,6 +970,37 @@ footer::before {
     font-size: 0.9rem;
   }
 
+  .catalog {
+    padding: 2rem 1rem;
+    max-width: 100%;
+  }
+
+  .catalog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-card {
+    height: 420px;
+  }
+
+  .detail-layout {
+    flex-direction: column;
+  }
+
+  .detail-image {
+    max-width: 100%;
+  }
+
+  .related-carousel {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .related-item {
+    min-width: 300px;
+    max-width: 100%;
+  }
+
   .contact {
     padding: 2rem 1rem;
     max-width: 100%;
@@ -827,6 +1063,18 @@ footer::before {
 @media (min-width: 601px) and (max-width: 1024px) {
   .featured-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .catalog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .detail-layout {
+    flex-direction: column;
+  }
+
+  .detail-image {
+    max-width: 100%;
   }
 
   .timeline {
