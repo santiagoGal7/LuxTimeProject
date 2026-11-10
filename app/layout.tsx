@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import "@fontsource/outfit/latin-400.css";
-import "@fontsource/outfit/latin-500.css";
-import "@fontsource/cormorant-garamond/latin-500.css";
-import "@fontsource/cormorant-garamond/latin-600.css";
+import "@fontsource/manrope/latin-400.css";
+import "@fontsource/manrope/latin-500.css";
+import "@fontsource/fraunces/latin-500.css";
+import "@fontsource/fraunces/latin-600.css";
 import { SiteFrame } from "@/components/site-frame";
 import "./globals.css";
 

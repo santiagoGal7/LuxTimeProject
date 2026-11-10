@@ -4,6 +4,7 @@ import { Heart, Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { CartDrawer } from "@/components/cart-drawer";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -33,6 +34,8 @@ export function SiteHeader() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [scrolled, setScrolled] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [mega, setMega] = useState(false);
   const count = hydrated ? cartCount(cart) : 0;
   const wishes = hydrated ? wishlist.length : 0;
   const products = useMemo(
@@ -73,21 +76,62 @@ export function SiteHeader() {
           LUX<span className="text-brass">TIME</span>
         </Link>
         <nav aria-label="Principal" className="ml-8 hidden items-center gap-6 md:flex">
-          {LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "text-[0.68rem] uppercase tracking-[0.18em]",
-                overFilm
-                  ? "text-[#f4efe6]/80 hover:text-[#e7d7c1]"
-                  : "text-ink/70 hover:text-forest",
-                pathname.startsWith(link.href) && (overFilm ? "text-[#e7d7c1]" : "text-forest"),
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {LINKS.map((link) =>
+            link.href === "/catalogo" ? (
+              <div
+                key={link.href}
+                className="relative"
+                onMouseEnter={() => setMega(true)}
+                onMouseLeave={() => setMega(false)}
+              >
+                <Link
+                  href={link.href}
+                  className={cn(
+                    "text-[0.68rem] uppercase tracking-[0.18em]",
+                    overFilm ? "text-[#f4efe6]/80 hover:text-[#e7d7c1]" : "text-ink/70 hover:text-forest",
+                    pathname.startsWith(link.href) && (overFilm ? "text-[#e7d7c1]" : "text-forest"),
+                  )}
+                  aria-expanded={mega}
+                >
+                  {link.label}
+                </Link>
+                {mega ? (
+                  <div className="absolute left-0 top-full z-50 w-[28rem] bg-canvas p-4 text-ink shadow-line">
+                    <p className="text-[0.65rem] uppercase tracking-[0.16em] text-brass">Colecciones</p>
+                    <div className="mt-3 grid grid-cols-2 gap-2">
+                      {[
+                        ["clasica", "Clásica"],
+                        ["sport", "Sport"],
+                        ["alta", "Alta relojería"],
+                        ["heritage", "Heritage"],
+                      ].map(([id, label]) => (
+                        <Link
+                          key={id}
+                          href={`/catalogo?coleccion=${id}`}
+                          className="border border-line/20 px-3 py-3 text-sm hover:border-forest hover:text-forest"
+                          onClick={() => setMega(false)}
+                        >
+                          {label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+            ) : (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "text-[0.68rem] uppercase tracking-[0.18em]",
+                  overFilm ? "text-[#f4efe6]/80 hover:text-[#e7d7c1]" : "text-ink/70 hover:text-forest",
+                  pathname.startsWith(link.href) && (overFilm ? "text-[#e7d7c1]" : "text-forest"),
+                )}
+              >
+                {link.label}
+              </Link>
+            ),
+          )}
         </nav>
         <div className="ml-auto flex items-center gap-1">
           <button
@@ -108,16 +152,17 @@ export function SiteHeader() {
               <span className="absolute right-0 top-0 text-[0.6rem] text-forest">{wishes}</span>
             ) : null}
           </Link>
-          <Link
-            href="/carrito"
+          <button
+            type="button"
             className="relative p-2 hover:text-forest"
-            aria-label={`Carrito, ${count} piezas`}
+            aria-label={`Abrir pedido, ${count} piezas`}
+            onClick={() => setCartOpen(true)}
           >
             <ShoppingBag className="h-4 w-4" />
             {count > 0 ? (
               <span className="absolute right-0 top-0 text-[0.6rem] text-forest">{count}</span>
             ) : null}
-          </Link>
+          </button>
           <Link href="/cuenta" className="p-2 hover:text-forest" aria-label="Cuenta">
             <UserRound className="h-4 w-4" />
           </Link>
@@ -148,6 +193,7 @@ export function SiteHeader() {
         </div>
       ) : null}
 
+      <CartDrawer open={cartOpen} onOpenChange={setCartOpen} />
       <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
         <DialogContent>
           <DialogTitle>Buscar en el atelier</DialogTitle>

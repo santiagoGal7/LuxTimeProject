@@ -44,39 +44,55 @@ const MARQUEE = [
 ];
 
 export function HomeView() {
-  const [webgl, setWebgl] = useState(true);
-  const [motionOk, setMotionOk] = useState(true);
+  const [webgl, setWebgl] = useState(false);
+  const [motionOk, setMotionOk] = useState(false);
   const featured = SEED_PRODUCTS.filter((product) => product.featured);
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setMotionOk(!reduce);
+    const narrow = window.matchMedia("(max-width: 767px)").matches;
+    const startFilm = () => {
+      if (!reduce && !narrow) setMotionOk(true);
+    };
+    const idle = window.requestIdleCallback?.(startFilm) ?? window.setTimeout(startFilm, 900);
     try {
       const canvas = document.createElement("canvas");
-      const narrow = window.matchMedia("(max-width: 767px)").matches;
       setWebgl(
         !narrow && Boolean(canvas.getContext("webgl") || canvas.getContext("experimental-webgl")),
       );
     } catch {
       setWebgl(false);
     }
+    return () => {
+      if (typeof idle === "number") window.clearTimeout(idle);
+      else window.cancelIdleCallback?.(idle);
+    };
   }, []);
 
   return (
     <div>
       <section className="relative -mt-16 min-h-[100svh] overflow-hidden text-[#f4efe6]">
-        <video
-          className="absolute inset-0 h-full w-full object-cover"
-          autoPlay={motionOk}
-          muted
-          loop
-          playsInline
-          poster="/media/chrono.webp"
-          preload="metadata"
-          aria-hidden
-        >
-          {motionOk ? <source src="/media/hero.mp4" type="video/mp4" /> : null}
-        </video>
+        <Image
+          src="/media/chrono.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+        {motionOk ? (
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="none"
+            aria-hidden
+          >
+            <source src="/media/hero.mp4" type="video/mp4" />
+          </video>
+        ) : null}
         <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(10,22,20,0.88)_0%,rgba(10,22,20,0.42)_48%,rgba(10,22,20,0.2)_100%)]" />
         <div className="relative mx-auto flex min-h-[100svh] w-full max-w-page flex-col justify-end px-4 pb-14 pt-28 sm:px-6 md:px-8 md:pb-16 xl:px-10">
           <div className="max-w-3xl">

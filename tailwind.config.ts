@@ -16,8 +16,8 @@ const config: Config = {
         danger: "rgb(var(--danger) / <alpha-value>)",
       },
       fontFamily: {
-        sans: ["Outfit", "system-ui", "sans-serif"],
-        display: ["Cormorant Garamond", "Georgia", "serif"],
+        sans: ["Manrope", "system-ui", "sans-serif"],
+        display: ["Fraunces", "Georgia", "serif"],
       },
       maxWidth: {
         page: "90rem",

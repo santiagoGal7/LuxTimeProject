@@ -31,9 +31,17 @@ export function ProductCard({
             alt={`${product.name} de ${product.brand}`}
             fill
             sizes="(max-width: 768px) 50vw, 33vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+            className="object-cover transition duration-700 group-hover:scale-[1.04] group-hover:opacity-0"
             priority={priority}
           />
+          <Image
+            src={product.images[1] ?? product.images[0] ?? "/media/movement.webp"}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 50vw, 33vw"
+            className="object-cover opacity-0 transition duration-700 group-hover:opacity-100"
+          />
+          <span className="badge absolute bottom-3 left-3 bg-canvas/80">Vista rápida</span>
         </div>
         <div className="mt-3 flex items-start justify-between gap-3 border-t border-line/20 pt-3">
           <div>

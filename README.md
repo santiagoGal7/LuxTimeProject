@@ -55,7 +55,7 @@ El negro con oro de la primera versión se sustituye por dos temas que comparten
 
 El salón de día es el tema por defecto: marfil cálido (`#F4EFE6`), tinta verde casi negra (`#14211C`), verde botella (`#183A32`) para la acción y el latón (`#8C6A3D`) solo en el metal —la palabra TIME, los años, las reglas—. La vitrina de noche invierte el lienzo a un azul tinta (`#0C1822`), no a negro, y cambia el acento a champán (`#E4D2B8`) y el metal a platino (`#C6D2D8`). El botón del encabezado guarda la elección en el navegador.
 
-El héroe es siempre la vitrina: vídeo a sangre, velo verde noche y el reloj en tres dimensiones encima. El resto de la página vuelve al tema activo.
+El tema de día es el predeterminado. La tipografía es Fraunces en los títulos y Manrope en el texto, ambas en el repositorio con `font-display: swap` y una escala fluida. El héroe es la vitrina: fotografía inmediata y, en escritorio, el vídeo cuando el hilo está libre. El reloj en tres dimensiones vive más abajo y no se monta en el teléfono.
 
 ## Stack
 

@@ -25,5 +25,6 @@ Tipografía, vía Fontsource:
 
 | Familia                                                               | Uso             | Licencia                                                 |
 | --------------------------------------------------------------------- | --------------- | -------------------------------------------------------- |
-| [Outfit](https://fontsource.org/fonts/outfit)                         | Interfaz        | [SIL Open Font License 1.1](https://scripts.sil.org/OFL) |
-| [Cormorant Garamond](https://fontsource.org/fonts/cormorant-garamond) | Títulos y citas | [SIL Open Font License 1.1](https://scripts.sil.org/OFL) |
+| [Manrope](https://fontsource.org/fonts/manrope)                       | Texto, swap     | [SIL Open Font License 1.1](https://scripts.sil.org/OFL) |
+| [Fraunces](https://fontsource.org/fonts/fraunces)                     | Títulos, swap   | [SIL Open Font License 1.1](https://scripts.sil.org/OFL) |
+| `public/media/grain.webp`                                             | Textura propia  | Uso en LuxTime                                           |

@@ -186,7 +186,7 @@ function SalesChart({
       >
         {rows.map(([label, value]) => (
           <div key={label} className="flex h-full min-w-0 flex-1 flex-col justify-end">
-            <div className="bg-forest" style={{ height: `${Math.max(8, (value / max) * 100)}%` }} />
+            <div className="bg-gradient-to-t from-forest to-brass" style={{ height: `${Math.max(8, (value / max) * 100)}%` }} />
             <p className="mt-2 truncate text-center text-[0.65rem] uppercase tracking-[0.12em] text-mute">
               {label}
             </p>

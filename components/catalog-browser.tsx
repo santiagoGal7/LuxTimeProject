@@ -1,7 +1,7 @@
 "use client";
 
 import { SlidersHorizontal } from "lucide-react";
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useSearchParams } from "next/navigation";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
@@ -18,6 +18,7 @@ import {
   movementLabel,
 } from "@/lib/labels";
 import { selectCatalog, useLuxStore } from "@/lib/store";
+import { cn } from "@/lib/utils";
 import type { CatalogQuery, Collection, SortKey } from "@/lib/types";
 
 function toggle<T>(list: T[] | undefined, value: T) {
@@ -43,11 +44,19 @@ export function CatalogBrowser() {
   const [collection, setCollection] = useState<Collection | "">(
     initialCollection && COLLECTIONS.includes(initialCollection) ? initialCollection : "",
   );
+  const [page, setPage] = useState(1);
+  const pageSize = 9;
 
   const filtered = useMemo(() => {
     const list = filterProducts(products, query);
     return collection ? list.filter((product) => product.collection === collection) : list;
   }, [products, query, collection]);
+  useEffect(() => {
+    setPage(1);
+  }, [query, collection]);
+  const pages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const safePage = Math.min(page, pages);
+  const visible = filtered.slice((safePage - 1) * pageSize, safePage * pageSize);
 
   const filters = (
     <div className="space-y-6 text-sm">
@@ -197,7 +206,7 @@ export function CatalogBrowser() {
             </label>
             <select
               id="catalog-sort"
-              className="h-12 border border-line/25 bg-canvas px-3 text-sm"
+              className="field"
               value={query.sort ?? "featured"}
               onChange={(event) =>
                 setQuery((current) => ({ ...current, sort: event.target.value as SortKey }))
@@ -227,11 +236,26 @@ export function CatalogBrowser() {
           <p className="py-16 text-sm text-mute">Ninguna referencia coincide con esos filtros.</p>
         ) : (
           <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-3">
-            {filtered.map((product) => (
+            {visible.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         )}
+        {pages > 1 ? (
+          <nav className="mt-10 flex flex-wrap items-center justify-center gap-2" aria-label="Páginas">
+            {Array.from({ length: pages }, (_, index) => index + 1).map((number) => (
+              <button
+                key={number}
+                type="button"
+                className={cn("chip", number === safePage && "text-canvas")}
+                aria-current={number === safePage ? "page" : undefined}
+                onClick={() => setPage(number)}
+              >
+                {number}
+              </button>
+            ))}
+          </nav>
+        ) : null}
       </div>
     </div>
   );
@@ -260,7 +284,7 @@ function FilterChip({
       type="button"
       aria-pressed={pressed}
       onClick={onClick}
-      className={`border px-3 py-1 text-xs uppercase tracking-[0.12em] ${pressed ? "border-forest text-forest" : "border-line/25 text-ink/75"}`}
+      className={cn("chip", pressed && "text-canvas")}
     >
       {children}
     </button>
