@@ -44,10 +44,10 @@ export function CheckoutView() {
 
   if (order) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-16 md:px-8">
-        <p className="text-[0.68rem] uppercase tracking-[0.18em] text-gold">Pedido {order.id}</p>
+      <div className="shell max-w-3xl">
+        <p className="text-[0.68rem] uppercase tracking-[0.18em] text-forest">Pedido {order.id}</p>
         <h1 className="mt-3 font-display text-5xl">El atelier anotó el pedido.</h1>
-        <p className="mt-4 max-w-xl text-sm leading-7 text-ivory/75">
+        <p className="mt-4 max-w-xl text-sm leading-7 text-ink/75">
           El pago de la tarjeta terminada en {order.paymentLast4} es una simulación. No se ha
           enviado nada a una pasarela y no hay cargo. El total queda en el historial de esta cuenta
           si el correo coincide.
@@ -69,7 +69,7 @@ export function CheckoutView() {
 
   if (hydrated && summary.lines.length === 0) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-16 md:px-8">
+      <div className="shell max-w-3xl">
         <h1 className="font-display text-5xl">No hay nada que pagar.</h1>
         <Button asChild className="mt-8">
           <Link href="/carrito">Volver al carrito</Link>
@@ -79,7 +79,7 @@ export function CheckoutView() {
   }
 
   return (
-    <div className="mx-auto grid max-w-page gap-10 px-4 py-10 md:px-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
+    <div className="shell grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
       <form
         className="space-y-8"
         onSubmit={form.handleSubmit((values) => {
@@ -92,9 +92,9 @@ export function CheckoutView() {
         })}
       >
         <div>
-          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-gold">Paso 1 de 2</p>
+          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-forest">Paso 1 de 2</p>
           <h1 className="mt-2 font-display text-5xl">Envío y pago simulado</h1>
-          <p className="mt-3 max-w-xl text-sm leading-7 text-ivory/70">
+          <p className="mt-3 max-w-xl text-sm leading-7 text-ink/70">
             Usa 4242 4242 4242 4242, caducidad futura y cualquier CVC. La comprobación es local.
           </p>
         </div>
@@ -154,7 +154,7 @@ export function CheckoutView() {
         {error ? <p className="text-sm text-red-300">{error}</p> : null}
         <Button type="submit">Confirmar simulación · {cardBrand(form.watch("cardNumber"))}</Button>
       </form>
-      <aside className="h-fit border border-gold/30 p-6">
+      <aside className="h-fit border border-forest/30 p-6">
         <h2 className="font-display text-3xl">A pagar</h2>
         <ul className="mt-4 space-y-3 text-sm">
           {summary.lines.map((line) => (
@@ -167,7 +167,7 @@ export function CheckoutView() {
             </li>
           ))}
         </ul>
-        <p className="mt-4 flex justify-between border-t border-white/10 pt-4">
+        <p className="mt-4 flex justify-between border-t border-line/20 pt-4">
           <span>Total</span>
           <Money value={summary.total} />
         </p>

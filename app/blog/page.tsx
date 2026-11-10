@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   return (
-    <div className="mx-auto max-w-page px-4 py-12 md:px-8">
-      <p className="text-[0.68rem] uppercase tracking-[0.18em] text-gold">Cuaderno</p>
+    <div className="shell">
+      <p className="text-[0.68rem] uppercase tracking-[0.18em] text-forest">Cuaderno</p>
       <h1 className="mt-3 font-display text-5xl md:text-6xl">Notas del taller</h1>
-      <ul className="mt-10 divide-y divide-white/10 border-y border-white/10">
+      <ul className="mt-10 divide-y divide-line/20 border-y border-line/20">
         {POSTS.map((post) => (
           <li key={post.slug}>
             <Link
@@ -28,7 +28,7 @@ export default function BlogPage() {
                   {formatPostDate(post.date)} · {post.author}
                 </p>
                 <h2 className="mt-2 font-display text-4xl">{post.title}</h2>
-                <p className="mt-3 max-w-xl text-sm leading-7 text-ivory/75">{post.excerpt}</p>
+                <p className="mt-3 max-w-xl text-sm leading-7 text-ink/75">{post.excerpt}</p>
               </div>
             </Link>
           </li>

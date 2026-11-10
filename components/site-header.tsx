@@ -3,7 +3,8 @@
 import { Heart, Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { cartCount } from "@/lib/cart";
@@ -31,6 +32,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [scrolled, setScrolled] = useState(false);
   const count = hydrated ? cartCount(cart) : 0;
   const wishes = hydrated ? wishlist.length : 0;
   const products = useMemo(
@@ -38,12 +40,27 @@ export function SiteHeader() {
     [overrides, customProducts],
   );
   const results = query.trim() ? filterProducts(products, { q: query }).slice(0, 6) : [];
+  const overFilm = pathname === "/" && !scrolled;
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   if (pathname.startsWith("/admin")) return null;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-gold/30 bg-ink/85 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-page items-center gap-4 px-4 md:px-8">
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-40 border-b backdrop-blur-md transition-colors duration-300",
+        overFilm
+          ? "border-transparent bg-transparent text-[#f4efe6]"
+          : "border-line/25 bg-canvas/90 text-ink",
+      )}
+    >
+      <div className="mx-auto flex h-16 max-w-page items-center gap-4 px-4 sm:px-6 md:px-8 xl:px-10">
         <button
           type="button"
           className="p-2 md:hidden"
@@ -52,8 +69,8 @@ export function SiteHeader() {
         >
           <Menu className="h-5 w-5" />
         </button>
-        <Link href="/" className="font-sans text-sm tracking-[0.32em] text-ivory">
-          LUX<span className="text-gold">TIME</span>
+        <Link href="/" className="font-sans text-sm tracking-[0.32em]">
+          LUX<span className="text-brass">TIME</span>
         </Link>
         <nav aria-label="Principal" className="ml-8 hidden items-center gap-6 md:flex">
           {LINKS.map((link) => (
@@ -61,8 +78,11 @@ export function SiteHeader() {
               key={link.href}
               href={link.href}
               className={cn(
-                "text-[0.68rem] uppercase tracking-[0.18em] text-ivory/70 hover:text-gold",
-                pathname.startsWith(link.href) && "text-gold",
+                "text-[0.68rem] uppercase tracking-[0.18em]",
+                overFilm
+                  ? "text-[#f4efe6]/80 hover:text-[#e7d7c1]"
+                  : "text-ink/70 hover:text-forest",
+                pathname.startsWith(link.href) && (overFilm ? "text-[#e7d7c1]" : "text-forest"),
               )}
             >
               {link.label}
@@ -72,7 +92,7 @@ export function SiteHeader() {
         <div className="ml-auto flex items-center gap-1">
           <button
             type="button"
-            className="p-2 hover:text-gold"
+            className="p-2 hover:text-forest"
             aria-label="Buscar"
             onClick={() => setSearchOpen(true)}
           >
@@ -80,32 +100,33 @@ export function SiteHeader() {
           </button>
           <Link
             href="/deseos"
-            className="relative p-2 hover:text-gold"
+            className="relative p-2 hover:text-forest"
             aria-label={`Lista de deseos, ${wishes} piezas`}
           >
             <Heart className="h-4 w-4" />
             {wishes > 0 ? (
-              <span className="absolute right-0 top-0 text-[0.6rem] text-gold">{wishes}</span>
+              <span className="absolute right-0 top-0 text-[0.6rem] text-forest">{wishes}</span>
             ) : null}
           </Link>
           <Link
             href="/carrito"
-            className="relative p-2 hover:text-gold"
+            className="relative p-2 hover:text-forest"
             aria-label={`Carrito, ${count} piezas`}
           >
             <ShoppingBag className="h-4 w-4" />
             {count > 0 ? (
-              <span className="absolute right-0 top-0 text-[0.6rem] text-gold">{count}</span>
+              <span className="absolute right-0 top-0 text-[0.6rem] text-forest">{count}</span>
             ) : null}
           </Link>
-          <Link href="/cuenta" className="p-2 hover:text-gold" aria-label="Cuenta">
+          <Link href="/cuenta" className="p-2 hover:text-forest" aria-label="Cuenta">
             <UserRound className="h-4 w-4" />
           </Link>
+          <ThemeToggle />
         </div>
       </div>
 
       {open ? (
-        <div className="fixed inset-0 z-50 bg-ink px-6 py-6 md:hidden">
+        <div className="fixed inset-0 z-50 bg-canvas px-6 py-6 md:hidden">
           <div className="flex items-center justify-between">
             <p className="tracking-[0.32em]">LUXTIME</p>
             <button type="button" aria-label="Cerrar menú" onClick={() => setOpen(false)}>
@@ -118,7 +139,7 @@ export function SiteHeader() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="font-display text-5xl text-ivory"
+                className="font-display text-5xl text-ink"
               >
                 {link.label}
               </Link>
@@ -151,12 +172,12 @@ export function SiteHeader() {
               autoFocus
             />
           </form>
-          <ul className="mt-4 divide-y divide-white/10">
+          <ul className="mt-4 divide-y divide-line/20">
             {results.map((product) => (
               <li key={product.id}>
                 <Link
                   href={`/producto/${product.slug}`}
-                  className="flex items-center justify-between py-3 hover:text-gold"
+                  className="flex items-center justify-between py-3 hover:text-forest"
                   onClick={() => setSearchOpen(false)}
                 >
                   <span>

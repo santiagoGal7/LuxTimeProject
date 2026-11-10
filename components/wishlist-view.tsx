@@ -19,12 +19,12 @@ export function WishlistView() {
   }, [hydrated, overrides, customProducts, wishlist]);
 
   return (
-    <div className="mx-auto max-w-page px-4 py-10 md:px-8">
-      <p className="text-[0.68rem] uppercase tracking-[0.18em] text-gold">Guardadas</p>
+    <div className="shell">
+      <p className="text-[0.68rem] uppercase tracking-[0.18em] text-forest">Guardadas</p>
       <h1 className="mt-2 font-display text-5xl">Lista de deseos</h1>
       {products.length === 0 ? (
         <div className="mt-8">
-          <p className="text-sm text-ivory/70">No hay piezas guardadas en este navegador.</p>
+          <p className="text-sm text-ink/70">No hay piezas guardadas en este navegador.</p>
           <Button asChild className="mt-6">
             <Link href="/catalogo">Ver el catálogo</Link>
           </Button>

@@ -8,10 +8,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        gold: "border border-gold bg-transparent text-gold hover:bg-gold hover:text-navy",
-        solid: "bg-gold text-navy hover:bg-ivory",
-        ghost: "text-ivory/80 hover:text-gold",
-        quiet: "border border-white/15 text-ivory hover:border-gold hover:text-gold",
+        salon: "border border-forest bg-transparent text-forest hover:bg-forest hover:text-canvas",
+        solid: "bg-forest text-canvas hover:bg-brass",
+        ghost: "text-ink/80 hover:text-forest",
+        quiet: "border border-line/25 text-ink hover:border-forest hover:text-forest",
       },
       size: {
         default: "h-12 px-6",
@@ -20,7 +20,7 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      variant: "gold",
+      variant: "salon",
       size: "default",
     },
   },

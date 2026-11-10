@@ -3,38 +3,85 @@
 @tailwind utilities;
 
 :root {
+  color-scheme: light;
+  --canvas: 244 239 230;
+  --canvas-2: 232 224 210;
+  --ink: 20 33 28;
+  --mute: 96 90 80;
+  --accent: 24 58 50;
+  --metal: 140 106 61;
+  --line: 24 58 50;
+  --danger: 140 58 50;
+}
+
+.dark {
   color-scheme: dark;
-  --background: #07090c;
-  --foreground: #f6f1e7;
+  --canvas: 12 24 34;
+  --canvas-2: 18 36 48;
+  --ink: 243 237 228;
+  --mute: 168 176 180;
+  --accent: 228 210 184;
+  --metal: 198 210 216;
+  --line: 228 210 184;
+  --danger: 232 164 148;
 }
 
 html {
-  background: var(--background);
+  background: rgb(var(--canvas));
 }
 
 body {
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: clip;
   background:
-    radial-gradient(1200px 500px at 80% -10%, rgba(212, 175, 55, 0.08), transparent 55%),
-    var(--background);
-  color: var(--foreground);
+    radial-gradient(900px 420px at 100% -10%, rgb(var(--accent) / 0.08), transparent 60%),
+    rgb(var(--canvas));
+  color: rgb(var(--ink));
   font-family: Outfit, system-ui, sans-serif;
   text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: #d4af37;
-  color: #0d1b2a;
+  background: rgb(var(--accent));
+  color: rgb(var(--canvas));
 }
 
 :focus-visible {
-  outline: 2px solid #d4af37;
+  outline: 2px solid rgb(var(--accent));
   outline-offset: 3px;
 }
 
+.shell {
+  margin-inline: auto;
+  width: 100%;
+  max-width: min(90rem, 100%);
+  min-width: 0;
+  overflow-x: clip;
+  padding: 3.5rem 1rem;
+}
+
+.shell.max-w-3xl {
+  max-width: 48rem;
+}
+
+.shell.max-w-xl {
+  max-width: 36rem;
+}
+
+@media (min-width: 768px) {
+  .shell {
+    padding: 4rem 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .shell {
+    padding: 5rem 2.5rem;
+  }
+}
+
 .marquee-track {
-  animation: marquee 36s linear infinite;
+  animation: marquee 38s linear infinite;
 }
 
 @keyframes marquee {
@@ -46,12 +93,13 @@ body {
   }
 }
 
+.rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(var(--metal)), transparent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marquee-track {
     animation: none;
   }
-}
-
-.hairline {
-  background-image: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.7), transparent);
 }

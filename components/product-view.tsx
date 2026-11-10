@@ -4,6 +4,7 @@ import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { EmblaRow } from "@/components/embla-row";
 import { Money } from "@/components/money";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
@@ -33,7 +34,7 @@ export function ProductView({ initial, slug }: { initial: Product | null; slug: 
 
   if (!live) {
     return (
-      <div className="mx-auto max-w-page px-4 py-24 md:px-8">
+      <div className="shell">
         <h1 className="font-display text-5xl">Esta referencia no está en el catálogo.</h1>
         <Button asChild className="mt-8">
           <Link href="/catalogo">Volver al catálogo</Link>
@@ -60,9 +61,9 @@ function ProductDetail({ product, catalog }: { product: Product; catalog: Produc
   const current = product.images[image] ?? product.images[0];
 
   return (
-    <article className="mx-auto max-w-page px-4 py-10 md:px-8">
+    <article className="shell">
       <p className="text-[0.68rem] uppercase tracking-[0.18em] text-mute">
-        <Link href="/catalogo" className="hover:text-gold">
+        <Link href="/catalogo" className="hover:text-forest">
           Catálogo
         </Link>
         <span className="mx-2">/</span>
@@ -72,7 +73,7 @@ function ProductDetail({ product, catalog }: { product: Product; catalog: Produc
         <div>
           <button
             type="button"
-            className="relative block aspect-square w-full bg-navy"
+            className="relative block aspect-square w-full bg-forest/10"
             onClick={() => setZoom(true)}
           >
             {current ? (
@@ -84,29 +85,31 @@ function ProductDetail({ product, catalog }: { product: Product; catalog: Produc
                 priority
               />
             ) : null}
-            <span className="absolute bottom-3 right-3 bg-ink/80 px-3 py-1 text-[0.65rem] uppercase tracking-[0.14em]">
+            <span className="absolute bottom-3 right-3 bg-canvas/80 px-3 py-1 text-[0.65rem] uppercase tracking-[0.14em]">
               Ampliar
             </span>
           </button>
-          <div className="mt-3 grid grid-cols-3 gap-3">
-            {product.images.map((src, index) => (
-              <button
-                key={src}
-                type="button"
-                aria-label={`Ver imagen ${index + 1}`}
-                onClick={() => setImage(index)}
-                className={cn(
-                  "relative aspect-square bg-navy",
-                  index === image && "outline outline-1 outline-gold",
-                )}
-              >
-                <Image src={src} alt="" fill className="object-cover" />
-              </button>
-            ))}
+          <div className="mt-3">
+            <EmblaRow label={`Galería de ${product.name}`}>
+              {product.images.map((src, index) => (
+                <button
+                  key={`${src}-${index}`}
+                  type="button"
+                  aria-label={`Ver imagen ${index + 1}`}
+                  onClick={() => setImage(index)}
+                  className={cn(
+                    "relative aspect-square min-w-0 flex-[0_0_32%] bg-forest/10",
+                    index === image && "outline outline-1 outline-forest",
+                  )}
+                >
+                  <Image src={src} alt="" fill className="object-cover" />
+                </button>
+              ))}
+            </EmblaRow>
           </div>
         </div>
         <div>
-          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-gold">{product.brand}</p>
+          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-forest">{product.brand}</p>
           <h1 className="mt-2 font-display text-5xl md:text-6xl">{product.name}</h1>
           <p className="mt-4 text-2xl">
             <Money value={price} />
@@ -114,16 +117,18 @@ function ProductDetail({ product, catalog }: { product: Product; catalog: Produc
           <p
             className={cn(
               "mt-2 text-[0.68rem] uppercase tracking-[0.16em]",
-              product.stock > 0 ? "text-gold" : "text-red-300",
+              product.stock > 0 ? "text-forest" : "text-red-300",
             )}
           >
             {product.stock > 0 ? `${product.stock} en stock` : "Agotado"}
           </p>
-          <p className="mt-6 max-w-xl text-sm leading-7 text-ivory/75">{product.description}</p>
-          <p className="mt-3 max-w-xl text-sm leading-7 text-ivory/60">{product.story}</p>
+          <p className="mt-6 max-w-xl text-sm leading-7 text-ink/75">{product.description}</p>
+          <p className="mt-3 max-w-xl text-sm leading-7 text-ink/60">{product.story}</p>
 
           <fieldset className="mt-8">
-            <legend className="text-[0.68rem] uppercase tracking-[0.16em] text-gold">Correa</legend>
+            <legend className="text-[0.68rem] uppercase tracking-[0.16em] text-forest">
+              Correa
+            </legend>
             <div className="mt-3 flex flex-wrap gap-2">
               {product.variants.map((variant) => (
                 <button
@@ -133,7 +138,7 @@ function ProductDetail({ product, catalog }: { product: Product; catalog: Produc
                   onClick={() => setVariantId(variant.id)}
                   className={cn(
                     "border px-3 py-2 text-left text-xs uppercase tracking-[0.12em]",
-                    variantId === variant.id ? "border-gold text-gold" : "border-white/15",
+                    variantId === variant.id ? "border-forest text-forest" : "border-line/25",
                   )}
                 >
                   {variant.label}
@@ -146,7 +151,7 @@ function ProductDetail({ product, catalog }: { product: Product; catalog: Produc
           </fieldset>
 
           <fieldset className="mt-6">
-            <legend className="text-[0.68rem] uppercase tracking-[0.16em] text-gold">
+            <legend className="text-[0.68rem] uppercase tracking-[0.16em] text-forest">
               Grabado
             </legend>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -158,7 +163,7 @@ function ProductDetail({ product, catalog }: { product: Product; catalog: Produc
                   onClick={() => setEngraving(option)}
                   className={cn(
                     "border px-3 py-2 text-xs uppercase tracking-[0.12em]",
-                    engraving === option ? "border-gold text-gold" : "border-white/15",
+                    engraving === option ? "border-forest text-forest" : "border-line/25",
                   )}
                 >
                   {engravingLabel[option]}
@@ -172,7 +177,7 @@ function ProductDetail({ product, catalog }: { product: Product; catalog: Produc
                   value={engravingText}
                   maxLength={18}
                   onChange={(event) => setEngravingText(event.target.value)}
-                  className="mt-2 h-12 w-full border border-white/15 bg-transparent px-3 text-ivory"
+                  className="mt-2 h-12 w-full border border-line/25 bg-transparent px-3 text-ink"
                 />
                 <span className="mt-1 block">Suplemento de {ENGRAVING_FEE} USD</span>
               </label>
@@ -199,13 +204,13 @@ function ProductDetail({ product, catalog }: { product: Product; catalog: Produc
               aria-pressed={wished}
               onClick={() => toggleWishlist(product.id)}
             >
-              <Heart className={cn("h-4 w-4", wished && "fill-gold text-gold")} />
+              <Heart className={cn("h-4 w-4", wished && "fill-forest text-forest")} />
               {wished ? "En deseos" : "Guardar"}
             </Button>
           </div>
-          {notice ? <p className="mt-3 text-sm text-gold">{notice}</p> : null}
+          {notice ? <p className="mt-3 text-sm text-forest">{notice}</p> : null}
 
-          <dl className="mt-10 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-white/10 pt-6 text-sm">
+          <dl className="mt-10 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-line/20 pt-6 text-sm">
             {[
               ["Calibre", product.calibre],
               ["Movimiento", movementLabel[product.movement]],
@@ -216,7 +221,7 @@ function ProductDetail({ product, catalog }: { product: Product; catalog: Produc
               ["Reserva", product.powerReserve],
               ["Complicaciones", product.complications.join(", ")],
             ].map(([label, value]) => (
-              <div key={label} className="border-b border-white/10 pb-3">
+              <div key={label} className="border-b border-line/20 pb-3">
                 <dt className="text-[0.65rem] uppercase tracking-[0.14em] text-mute">{label}</dt>
                 <dd className="mt-1">{value}</dd>
               </div>

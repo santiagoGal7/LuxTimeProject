@@ -16,7 +16,7 @@ export function ContactForm() {
 
   if (form.formState.isSubmitSuccessful) {
     return (
-      <p className="border border-gold/40 p-6 text-sm leading-7">
+      <p className="border border-forest/40 p-6 text-sm leading-7">
         Mensaje guardado en este navegador. El atelier lo ve en el panel, sin servidor de correo.
       </p>
     );

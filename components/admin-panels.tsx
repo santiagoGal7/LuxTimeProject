@@ -51,9 +51,9 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
   if (!user || user.role !== "admin") {
     return (
-      <div className="mx-auto max-w-xl px-4 py-24">
+      <div className="shell max-w-xl">
         <h1 className="font-display text-5xl">El panel es del atelier.</h1>
-        <p className="mt-4 text-sm leading-7 text-ivory/70">
+        <p className="mt-4 text-sm leading-7 text-ink/70">
           Entra con atelier@luxtime.com y la clave calibre1940.
         </p>
         <Button asChild className="mt-6">
@@ -64,9 +64,9 @@ export function AdminShell({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="mx-auto grid max-w-page gap-8 px-4 py-8 md:px-8 lg:grid-cols-[13rem_minmax(0,1fr)]">
+    <div className="shell grid items-start gap-8 lg:grid-cols-[13rem_minmax(0,1fr)]">
       <aside>
-        <p className="text-[0.68rem] uppercase tracking-[0.18em] text-gold">Atelier</p>
+        <p className="text-[0.68rem] uppercase tracking-[0.18em] text-forest">Atelier</p>
         <p className="mt-2 font-display text-3xl">{user.name}</p>
         <nav className="mt-6 flex flex-col gap-2" aria-label="Panel">
           {LINKS.map((link) => {
@@ -77,7 +77,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
                 href={link.href}
                 className={cn(
                   "text-sm uppercase tracking-[0.14em]",
-                  active ? "text-gold" : "text-ivory/70 hover:text-ivory",
+                  active ? "text-forest" : "text-ink/70 hover:text-ink",
                 )}
                 aria-current={active ? "page" : undefined}
               >
@@ -87,7 +87,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
           })}
           <Link
             href="/"
-            className="mt-6 text-xs uppercase tracking-[0.14em] text-mute hover:text-gold"
+            className="mt-6 text-xs uppercase tracking-[0.14em] text-mute hover:text-forest"
           >
             Volver a la tienda
           </Link>
@@ -113,36 +113,48 @@ export function AdminDashboard() {
   return (
     <div>
       <h1 className="font-display text-5xl">Tablero</h1>
-      <dl className="mt-8 grid gap-px bg-gold/30 sm:grid-cols-2 xl:grid-cols-4">
+      <dl className="mt-8 grid gap-px bg-forest/30 sm:grid-cols-2 xl:grid-cols-4">
         {[
           ["Pedidos", String(orders.length)],
           ["Importe anotado", revenue.toLocaleString("es-ES") + " USD"],
           ["Unidades", String(units)],
           ["Agotadas", String(soldOut.length)],
         ].map(([label, value]) => (
-          <div key={label} className="bg-ink p-5">
+          <div key={label} className="bg-canvas p-5">
             <dt className="text-[0.65rem] uppercase tracking-[0.16em] text-mute">{label}</dt>
             <dd className="mt-2 font-display text-4xl">{value}</dd>
           </div>
         ))}
       </dl>
-      <div className="mt-10 grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+      <div className="mt-10 grid items-start gap-10 lg:grid-cols-[1.2fr_0.8fr]">
         <SalesChart orders={orders} />
         <div>
           <h2 className="font-display text-3xl">Stock corto</h2>
-          <ul className="mt-4 divide-y divide-white/10 border-y border-white/10 text-sm">
+          <ul className="mt-4 divide-y divide-line/20 border-y border-line/20 text-sm">
             {low.length === 0 ? (
               <li className="py-3 text-mute">Ninguna referencia está en dos unidades o menos.</li>
             ) : null}
             {low.map((product) => (
               <li key={product.id} className="flex justify-between py-3">
                 <span>{product.name}</span>
-                <span className="text-gold">{product.stock}</span>
+                <span className="text-forest">{product.stock}</span>
               </li>
             ))}
           </ul>
         </div>
       </div>
+      <h2 className="mt-12 font-display text-3xl">Últimos encargos</h2>
+      <ul className="mt-4 divide-y divide-line/20 border-y border-line/20 text-sm">
+        {orders.slice(0, 4).map((order) => (
+          <li key={order.id} className="flex items-center justify-between gap-4 py-3">
+            <span>
+              <span className="text-forest">{order.id}</span>
+              <span className="ml-3 text-mute">{order.shipping.name}</span>
+            </span>
+            <span>{order.total.toLocaleString("es-ES")} USD</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -174,7 +186,7 @@ function SalesChart({
       >
         {rows.map(([label, value]) => (
           <div key={label} className="flex h-full min-w-0 flex-1 flex-col justify-end">
-            <div className="bg-gold" style={{ height: `${Math.max(8, (value / max) * 100)}%` }} />
+            <div className="bg-forest" style={{ height: `${Math.max(8, (value / max) * 100)}%` }} />
             <p className="mt-2 truncate text-center text-[0.65rem] uppercase tracking-[0.12em] text-mute">
               {label}
             </p>
@@ -220,7 +232,7 @@ export function AdminProducts() {
     <div>
       <h1 className="font-display text-5xl">Piezas</h1>
       <form
-        className="mt-8 grid gap-3 border border-gold/30 p-4 md:grid-cols-4"
+        className="mt-8 grid gap-3 border border-forest/30 p-4 md:grid-cols-4"
         onSubmit={(event) => {
           event.preventDefault();
           const parsed = productDraftSchema.safeParse(draft);
@@ -336,7 +348,7 @@ function ProductRow({
   onChange: (patch: Partial<Product>) => void;
 }) {
   return (
-    <tr className="border-t border-white/10">
+    <tr className="border-t border-line/20">
       <td className="py-3">
         <span className="block">{product.name}</span>
         <span className="text-xs text-mute">{product.brand}</span>
@@ -352,7 +364,7 @@ function ProductRow({
       <td>
         <button
           type="button"
-          className="text-xs uppercase tracking-[0.14em] text-gold"
+          className="text-xs uppercase tracking-[0.14em] text-forest"
           onClick={() => onChange({ hidden: !product.hidden })}
         >
           {product.hidden ? "Oculta" : "Visible"}
@@ -373,7 +385,7 @@ export function AdminInventory() {
   return (
     <div>
       <h1 className="font-display text-5xl">Inventario</h1>
-      <ul className="mt-8 divide-y divide-white/10 border-y border-white/10">
+      <ul className="mt-8 divide-y divide-line/20 border-y border-line/20">
         {products.map((product) => (
           <li
             key={product.id}
@@ -411,10 +423,10 @@ export function AdminOrders() {
       <h1 className="font-display text-5xl">Pedidos</h1>
       <ul className="mt-8 space-y-4">
         {orders.map((order) => (
-          <li key={order.id} className="border border-white/10 p-4">
+          <li key={order.id} className="border border-line/20 p-4">
             <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center">
               <div>
-                <p className="text-gold">{order.id}</p>
+                <p className="text-forest">{order.id}</p>
                 <p className="mt-1">{order.shipping.name}</p>
                 <p className="text-xs text-mute">
                   {order.items.map((item) => `${item.name} × ${item.qty}`).join(" · ")}
@@ -427,7 +439,7 @@ export function AdminOrders() {
                 </label>
                 <select
                   id={`status-${order.id}`}
-                  className="h-10 border border-white/15 bg-ink px-2 text-sm"
+                  className="h-10 border border-line/25 bg-canvas px-2 text-sm"
                   value={order.status}
                   onChange={(event) => setOrderStatus(order.id, event.target.value as OrderStatus)}
                 >
@@ -457,8 +469,8 @@ export function AdminMessages() {
           <li className="text-sm text-mute">El formulario de contacto aún no dejó notas.</li>
         ) : null}
         {messages.map((message) => (
-          <li key={message.id} className="border border-white/10 p-4">
-            <p className="text-gold">{message.name}</p>
+          <li key={message.id} className="border border-line/20 p-4">
+            <p className="text-forest">{message.name}</p>
             <p className="text-xs text-mute">
               {message.email} · {message.phone}
             </p>
@@ -467,7 +479,7 @@ export function AdminMessages() {
         ))}
       </ul>
       <h2 className="mt-10 font-display text-3xl">Boletín</h2>
-      <ul className="mt-4 text-sm text-ivory/80">
+      <ul className="mt-4 text-sm text-ink/80">
         {newsletter.length === 0 ? (
           <li>Nadie se ha apuntado todavía.</li>
         ) : (
@@ -498,7 +510,7 @@ function Select({
 }) {
   return (
     <select
-      className="h-12 w-full border border-white/15 bg-ink px-3 text-sm"
+      className="h-12 w-full border border-line/25 bg-canvas px-3 text-sm"
       value={value}
       onChange={(event) => onChange(event.target.value)}
     >

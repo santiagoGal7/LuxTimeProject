@@ -20,6 +20,12 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     <html lang="es">
       <body className="font-sans antialiased">
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(localStorage.getItem('luxtime-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}",
+          }}
+        />
         <SiteFrame>{children}</SiteFrame>
       </body>
     </html>

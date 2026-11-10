@@ -25,7 +25,7 @@ const atelier = {
     orders: [
       {
         id: "LT-24091",
-        userEmail: "cliente@luxtime.com",
+        userEmail: "atelier@luxtime.com",
         createdAt: "2026-02-11T15:04:00.000Z",
         status: "entregado",
         items: [
@@ -43,8 +43,8 @@ const atelier = {
           },
         ],
         shipping: {
-          name: "Clara Moreau",
-          email: "cliente@luxtime.com",
+          name: "Santiago Gallo",
+          email: "atelier@luxtime.com",
           phone: "+41 22 000 1940",
           address: "Rue du Rhône 12",
           city: "Ginebra",
@@ -88,6 +88,38 @@ const atelier = {
         total: 7550,
       },
       {
+        id: "LT-24144",
+        userEmail: "invitado@correo.com",
+        createdAt: "2026-06-19T18:41:00.000Z",
+        status: "preparacion",
+        items: [
+          {
+            productId: "reloj-vintage",
+            name: "Reloj Vintage",
+            brand: "Marlowe & Fils",
+            collection: "heritage",
+            image: "/media/pocket.webp",
+            variantLabel: "Piel marrón",
+            engraving: "fecha",
+            engravingText: "1940",
+            qty: 1,
+            unitPrice: 3100,
+          },
+        ],
+        shipping: {
+          name: "Andrés Vidal",
+          email: "invitado@correo.com",
+          phone: "+34 600 000 000",
+          address: "Calle del Prado 8",
+          city: "Madrid",
+          country: "España",
+        },
+        paymentLast4: "4444",
+        subtotal: 3100,
+        shippingCost: 80,
+        total: 3180,
+      },
+      {
         id: "LT-24180",
         userEmail: "coleccion@correo.com",
         createdAt: "2026-09-01T09:12:00.000Z",
@@ -120,7 +152,7 @@ const atelier = {
         total: 6500,
       },
     ],
-    newsletter: ["clara@correo.com"],
+    newsletter: [],
     messages: [],
   },
   version: 0,
@@ -132,7 +164,14 @@ const shots = [
   ["producto", "/producto/reloj-clasico"],
   ["carrito", "/carrito"],
   ["checkout", "/checkout"],
+  ["cuenta", "/cuenta"],
+  ["pedidos", "/pedidos"],
+  ["deseos", "/deseos"],
   ["admin", "/admin"],
+  ["historia", "/historia"],
+  ["contacto", "/contacto"],
+  ["faq", "/faq"],
+  ["blog", "/blog"],
 ];
 
 const browser = await puppeteer.launch({
@@ -141,23 +180,28 @@ const browser = await puppeteer.launch({
   args: ["--no-sandbox", "--disable-dev-shm-usage"],
 });
 
-for (const [width, height, suffix] of [
-  [1440, 900, "1440"],
-  [360, 800, "360"],
-]) {
-  const page = await browser.newPage();
-  await page.setViewport({ width, height, deviceScaleFactor: 1 });
-  await page.evaluateOnNewDocument((payload) => {
-    localStorage.setItem("luxtime-atelier", payload);
-  }, JSON.stringify(atelier));
+const page = await browser.newPage();
+await page.evaluateOnNewDocument((payload) => {
+  localStorage.setItem("luxtime-atelier", payload);
+  sessionStorage.setItem("luxtime-loader", "1");
+}, JSON.stringify(atelier));
+
+for (const width of [360, 768, 1024, 1440, 1920]) {
+  await page.setViewport({ width, height: width < 700 ? 800 : 900, deviceScaleFactor: 1 });
   for (const [name, route] of shots) {
+    if (![360, 1440].includes(width) && !["home", "catalogo", "producto"].includes(name)) continue;
     await page.goto(`${base}${route}`, { waitUntil: "networkidle0", timeout: 60000 });
-    await new Promise((resolve) => setTimeout(resolve, name === "home" ? 1200 : 400));
-    const file = path.join(out, `${name}-${suffix}.png`);
-    await page.screenshot({ path: file });
-    console.log(file);
+    await new Promise((resolve) => setTimeout(resolve, name === "home" ? 900 : 250));
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    if (overflow > 1) console.log("OVERFLOW", width, name, overflow);
+    if (width === 360 || width === 1440) {
+      const file = path.join(out, `${name}-${width}.png`);
+      await page.screenshot({ path: file });
+      console.log(file);
+    }
   }
-  await page.close();
 }
 
 await browser.close();

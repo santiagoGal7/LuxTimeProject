@@ -14,8 +14,8 @@ export const metadata: Metadata = {
 
 export default function FaqPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 md:px-8">
-      <p className="text-[0.68rem] uppercase tracking-[0.18em] text-gold">Mostrador</p>
+    <div className="shell max-w-3xl">
+      <p className="text-[0.68rem] uppercase tracking-[0.18em] text-forest">Mostrador</p>
       <h1 className="mt-3 font-display text-5xl md:text-6xl">Preguntas frecuentes</h1>
       <Accordion type="single" collapsible className="mt-8">
         {FAQ.map((item) => (

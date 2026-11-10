@@ -32,10 +32,10 @@ export function AccountView() {
   if (user) {
     const mine = orders.filter((order) => order.userEmail === user.email);
     return (
-      <div className="mx-auto max-w-page px-4 py-10 md:px-8">
-        <div className="flex flex-col justify-between gap-4 border-b border-white/10 pb-6 md:flex-row md:items-end">
+      <div className="shell">
+        <div className="flex flex-col justify-between gap-4 border-b border-line/20 pb-6 md:flex-row md:items-end">
           <div>
-            <p className="text-[0.68rem] uppercase tracking-[0.18em] text-gold">
+            <p className="text-[0.68rem] uppercase tracking-[0.18em] text-forest">
               {user.role === "admin" ? "Atelier" : "Cliente"}
             </p>
             <h1 className="mt-2 font-display text-5xl">{user.name}</h1>
@@ -56,13 +56,13 @@ export function AccountView() {
         {mine.length === 0 ? (
           <p className="mt-4 text-sm text-mute">Todavía no hay pedidos con este correo.</p>
         ) : (
-          <ul className="mt-6 divide-y divide-white/10 border-y border-white/10">
+          <ul className="mt-6 divide-y divide-line/20 border-y border-line/20">
             {mine.map((order) => (
               <li
                 key={order.id}
                 className="grid gap-2 py-5 md:grid-cols-[8rem_1fr_auto] md:items-center"
               >
-                <span className="text-gold">{order.id}</span>
+                <span className="text-forest">{order.id}</span>
                 <span>
                   <span className="block">{order.items.map((item) => item.name).join(", ")}</span>
                   <span className="text-xs uppercase tracking-[0.14em] text-mute">
@@ -80,18 +80,18 @@ export function AccountView() {
   }
 
   return (
-    <div className="mx-auto grid max-w-page gap-10 px-4 py-10 md:grid-cols-2 md:px-8">
+    <div className="shell grid items-start gap-10 md:grid-cols-2">
       <div>
-        <p className="text-[0.68rem] uppercase tracking-[0.18em] text-gold">Cuenta</p>
+        <p className="text-[0.68rem] uppercase tracking-[0.18em] text-forest">Cuenta</p>
         <h1 className="mt-2 font-display text-5xl">
           {mode === "login" ? "Entrar" : "Crear cuenta"}
         </h1>
-        <p className="mt-4 max-w-md text-sm leading-7 text-ivory/70">
+        <p className="mt-4 max-w-md text-sm leading-7 text-ink/70">
           La sesión vive en este navegador. No hay servidor de identidad: sirve para recorrer
           pedidos y el panel.
         </p>
-        <div className="mt-8 border border-gold/30 p-5 text-sm leading-7">
-          <p className="text-[0.68rem] uppercase tracking-[0.16em] text-gold">
+        <div className="mt-8 border border-forest/30 p-5 text-sm leading-7">
+          <p className="text-[0.68rem] uppercase tracking-[0.16em] text-forest">
             Accesos de demostración
           </p>
           <p className="mt-2">Cliente: cliente@luxtime.com · atelier1940</p>
@@ -102,14 +102,14 @@ export function AccountView() {
         <div className="mb-6 flex gap-4 text-[0.68rem] uppercase tracking-[0.16em]">
           <button
             type="button"
-            className={mode === "login" ? "text-gold" : "text-mute"}
+            className={mode === "login" ? "text-forest" : "text-mute"}
             onClick={() => setMode("login")}
           >
             Entrar
           </button>
           <button
             type="button"
-            className={mode === "register" ? "text-gold" : "text-mute"}
+            className={mode === "register" ? "text-forest" : "text-mute"}
             onClick={() => setMode("register")}
           >
             Registro

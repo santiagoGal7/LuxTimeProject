@@ -17,7 +17,9 @@ LuxTime no usa logos ni nombres de manufacturas reales. Las fotografías de prod
 
 Los archivos están en WebP, recortados a un máximo de 1600 px de ancho. Next.js sirve además AVIF y WebP optimizados en las peticiones de `next/image`.
 
-El reloj del héroe no usa un modelo externo. Es geometría de React Three Fiber (caja, cilindro, toro y esfera) dibujada en el cliente.
+| `public/media/hero.mp4` | Montaje propio, 12 s, a partir de `chrono.webp`, `movement.webp`, `atelier.webp` y `gold.webp` | Misma licencia que esas fotografías |
+
+El reloj del héroe no usa un modelo externo. Es geometría de React Three Fiber (caja, cilindro, toro y esfera) con materiales físicos, dibujada en el cliente. En pantallas estrechas no se monta el lienzo 3D.
 
 Tipografía, vía Fontsource:
 

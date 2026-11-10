@@ -49,6 +49,14 @@ El pago acepta `4242 4242 4242 4242`, una caducidad futura y cualquier CVC de tr
 
 Se suman carrito persistente, lista de deseos, checkout simulado, historial de pedidos, boletín, FAQ y un panel para piezas, inventario, pedidos y un tablero con gráfico.
 
+## Paleta
+
+El negro con oro de la primera versión se sustituye por dos temas que comparten los mismos tokens.
+
+El salón de día es el tema por defecto: marfil cálido (`#F4EFE6`), tinta verde casi negra (`#14211C`), verde botella (`#183A32`) para la acción y el latón (`#8C6A3D`) solo en el metal —la palabra TIME, los años, las reglas—. La vitrina de noche invierte el lienzo a un azul tinta (`#0C1822`), no a negro, y cambia el acento a champán (`#E4D2B8`) y el metal a platino (`#C6D2D8`). El botón del encabezado guarda la elección en el navegador.
+
+El héroe es siempre la vitrina: vídeo a sangre, velo verde noche y el reloj en tres dimensiones encima. El resto de la página vuelve al tema activo.
+
 ## Stack
 
 Next.js 15 (App Router) y TypeScript. Las fichas y el cuaderno se generan en estático, y el mismo proyecto se publica en Vercel o en Netlify.

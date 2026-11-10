@@ -44,11 +44,17 @@ function AtelierWatch({ reduced }: { reduced: boolean }) {
       ))}
       <mesh rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[1.05, 1.05, 0.24, 64]} />
-        <meshStandardMaterial color="#f3eee4" metalness={1} roughness={0.18} />
+        <meshPhysicalMaterial
+          color="#efe6d8"
+          metalness={1}
+          roughness={0.16}
+          clearcoat={0.65}
+          clearcoatRoughness={0.2}
+        />
       </mesh>
       <mesh position={[0, 0, 0.13]}>
         <torusGeometry args={[0.98, 0.055, 16, 80]} />
-        <meshStandardMaterial color="#d4af37" metalness={1} roughness={0.22} />
+        <meshPhysicalMaterial color="#c4a574" metalness={1} roughness={0.22} clearcoat={0.4} />
       </mesh>
       <mesh position={[0, 0, 0.125]}>
         <circleGeometry args={[0.86, 64]} />
@@ -65,7 +71,7 @@ function AtelierWatch({ reduced }: { reduced: boolean }) {
           >
             <boxGeometry args={[major ? 0.04 : 0.022, major ? 0.16 : 0.09, 0.02]} />
             <meshStandardMaterial
-              color={major ? "#f0d78c" : "#f6f1e7"}
+              color={major ? "#e7d7c1" : "#f4efe6"}
               metalness={0.65}
               roughness={0.3}
             />
@@ -81,18 +87,18 @@ function AtelierWatch({ reduced }: { reduced: boolean }) {
       <group ref={minute} position={[0, 0, 0.19]}>
         <mesh position={[0, 0.3, 0]}>
           <boxGeometry args={[0.03, 0.62, 0.02]} />
-          <meshStandardMaterial color="#f0d78c" metalness={0.8} roughness={0.22} />
+          <meshStandardMaterial color="#e7d7c1" metalness={0.85} roughness={0.18} />
         </mesh>
       </group>
       <group ref={second} position={[0, 0, 0.21]}>
         <mesh position={[0, 0.34, 0]}>
           <boxGeometry args={[0.012, 0.72, 0.015]} />
-          <meshStandardMaterial color="#d4af37" metalness={0.45} roughness={0.3} />
+          <meshStandardMaterial color="#c4a574" metalness={0.55} roughness={0.28} />
         </mesh>
       </group>
       <mesh position={[1.14, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
         <cylinderGeometry args={[0.08, 0.09, 0.18, 24]} />
-        <meshStandardMaterial color="#d4af37" metalness={1} roughness={0.2} />
+        <meshPhysicalMaterial color="#d9e2e6" metalness={1} roughness={0.18} clearcoat={0.5} />
       </mesh>
     </group>
   );
@@ -103,7 +109,7 @@ export function WatchScene() {
 
   return (
     <Canvas
-      className="!absolute inset-0 !h-full !w-full"
+      style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
       camera={{ position: [0, 0.15, 5.2], fov: 32 }}
       dpr={[1, 1.5]}
       frameloop={reduced ? "demand" : "always"}

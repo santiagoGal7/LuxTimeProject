@@ -120,7 +120,7 @@ export function CatalogBrowser() {
         ))}
       </FilterGroup>
       <div>
-        <p className="text-[0.68rem] uppercase tracking-[0.16em] text-gold">Precio</p>
+        <p className="text-[0.68rem] uppercase tracking-[0.16em] text-forest">Precio</p>
         <div className="mt-3 grid grid-cols-2 gap-2">
           <Input
             inputMode="numeric"
@@ -148,7 +148,7 @@ export function CatalogBrowser() {
           />
         </div>
       </div>
-      <label className="flex items-center gap-2 text-sm text-ivory/80">
+      <label className="flex items-center gap-2 text-sm text-ink/80">
         <input
           type="checkbox"
           checked={Boolean(query.inStock)}
@@ -173,12 +173,12 @@ export function CatalogBrowser() {
   );
 
   return (
-    <div className="mx-auto grid max-w-page gap-10 px-4 py-10 md:px-8 lg:grid-cols-[16rem_minmax(0,1fr)]">
+    <div className="shell grid gap-10 lg:grid-cols-[16rem_minmax(0,1fr)]">
       <aside className="hidden lg:block">{filters}</aside>
       <div>
-        <div className="flex flex-col gap-4 border-b border-white/10 pb-5 md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-col gap-4 border-b border-line/20 pb-5 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-[0.68rem] uppercase tracking-[0.18em] text-gold">Catálogo</p>
+            <p className="text-[0.68rem] uppercase tracking-[0.18em] text-forest">Catálogo</p>
             <h1 className="mt-2 font-display text-5xl">Nuestro catálogo</h1>
             <p className="mt-2 text-sm text-mute">{filtered.length} referencias</p>
           </div>
@@ -197,7 +197,7 @@ export function CatalogBrowser() {
             </label>
             <select
               id="catalog-sort"
-              className="h-12 border border-white/15 bg-ink px-3 text-sm"
+              className="h-12 border border-line/25 bg-canvas px-3 text-sm"
               value={query.sort ?? "featured"}
               onChange={(event) =>
                 setQuery((current) => ({ ...current, sort: event.target.value as SortKey }))
@@ -240,7 +240,7 @@ export function CatalogBrowser() {
 function FilterGroup({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div>
-      <p className="text-[0.68rem] uppercase tracking-[0.16em] text-gold">{title}</p>
+      <p className="text-[0.68rem] uppercase tracking-[0.16em] text-forest">{title}</p>
       <div className="mt-3 flex flex-wrap gap-2">{children}</div>
     </div>
   );
@@ -260,7 +260,7 @@ function FilterChip({
       type="button"
       aria-pressed={pressed}
       onClick={onClick}
-      className={`border px-3 py-1 text-xs uppercase tracking-[0.12em] ${pressed ? "border-gold text-gold" : "border-white/15 text-ivory/75"}`}
+      className={`border px-3 py-1 text-xs uppercase tracking-[0.12em] ${pressed ? "border-forest text-forest" : "border-line/25 text-ink/75"}`}
     >
       {children}
     </button>

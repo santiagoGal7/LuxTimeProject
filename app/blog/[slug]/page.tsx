@@ -24,8 +24,8 @@ export default async function PostPage({ params }: PageProps) {
   if (!post) notFound();
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-12 md:px-8">
-      <Link href="/blog" className="text-[0.68rem] uppercase tracking-[0.16em] text-gold">
+    <article className="shell max-w-3xl">
+      <Link href="/blog" className="text-[0.68rem] uppercase tracking-[0.16em] text-forest">
         Cuaderno
       </Link>
       <p className="mt-6 text-[0.68rem] uppercase tracking-[0.16em] text-mute">
@@ -35,7 +35,7 @@ export default async function PostPage({ params }: PageProps) {
       <div className="relative mt-8 aspect-[16/9]">
         <Image src={post.image} alt="" fill className="object-cover" priority />
       </div>
-      <div className="mt-8 space-y-5 text-base leading-8 text-ivory/80">
+      <div className="mt-8 space-y-5 text-base leading-8 text-ink/80">
         {post.body.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}

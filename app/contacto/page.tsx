@@ -8,11 +8,11 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto grid max-w-page gap-12 px-4 py-12 md:grid-cols-2 md:px-8">
+    <div className="shell grid gap-12 md:grid-cols-2">
       <div>
-        <p className="text-[0.68rem] uppercase tracking-[0.18em] text-gold">Mostrador</p>
+        <p className="text-[0.68rem] uppercase tracking-[0.18em] text-forest">Mostrador</p>
         <h1 className="mt-3 font-display text-5xl md:text-6xl">Escríbenos antes de encargar.</h1>
-        <p className="mt-4 max-w-md text-sm leading-7 text-ivory/75">
+        <p className="mt-4 max-w-md text-sm leading-7 text-ink/75">
           El formulario guarda el mensaje en este navegador para que el panel del atelier pueda
           leerlo. No sale un correo.
         </p>
@@ -20,7 +20,7 @@ export default function ContactPage() {
           <div>
             <dt className="text-[0.65rem] uppercase tracking-[0.16em] text-mute">Correo</dt>
             <dd>
-              <a className="hover:text-gold" href="mailto:contacto@luxtime.com">
+              <a className="hover:text-forest" href="mailto:contacto@luxtime.com">
                 contacto@luxtime.com
               </a>
             </dd>
@@ -28,7 +28,7 @@ export default function ContactPage() {
           <div>
             <dt className="text-[0.65rem] uppercase tracking-[0.16em] text-mute">Teléfono</dt>
             <dd>
-              <a className="hover:text-gold" href="tel:+1234567890">
+              <a className="hover:text-forest" href="tel:+1234567890">
                 +1 (234) 567-890
               </a>
             </dd>
@@ -36,10 +36,10 @@ export default function ContactPage() {
           <div>
             <dt className="text-[0.65rem] uppercase tracking-[0.16em] text-mute">Redes</dt>
             <dd className="flex gap-4">
-              <a className="hover:text-gold" href="https://instagram.com/luxtime">
+              <a className="hover:text-forest" href="https://instagram.com/luxtime">
                 Instagram
               </a>
-              <a className="hover:text-gold" href="https://x.com/luxtime">
+              <a className="hover:text-forest" href="https://x.com/luxtime">
                 X
               </a>
             </dd>

@@ -25,7 +25,7 @@ export function ProductCard({
   return (
     <article className="group relative">
       <Link href={`/producto/${product.slug}`} className="block">
-        <div className="relative aspect-[4/5] overflow-hidden bg-navy">
+        <div className="relative aspect-[4/5] overflow-hidden bg-forest/10">
           <Image
             src={product.images[0] ?? "/media/silver.webp"}
             alt={`${product.name} de ${product.brand}`}
@@ -35,21 +35,23 @@ export function ProductCard({
             priority={priority}
           />
         </div>
-        <div className="mt-3 flex items-start justify-between gap-3 border-t border-white/10 pt-3">
+        <div className="mt-3 flex items-start justify-between gap-3 border-t border-line/20 pt-3">
           <div>
-            <p className="text-[0.65rem] uppercase tracking-[0.18em] text-gold">{product.brand}</p>
-            <h3 className="mt-1 font-display text-2xl leading-none text-ivory">{product.name}</h3>
+            <p className="text-[0.65rem] uppercase tracking-[0.18em] text-forest">
+              {product.brand}
+            </p>
+            <h3 className="mt-1 font-display text-2xl leading-none text-ink">{product.name}</h3>
             <p className="mt-2 text-xs text-mute">
               {product.sizeMm} mm · {materialLabel[product.material]} ·{" "}
               {movementLabel[product.movement]}
             </p>
           </div>
           <div className="text-right">
-            <Money value={product.price} className="text-sm text-ivory" />
+            <Money value={product.price} className="text-sm text-ink" />
             <p
               className={cn(
                 "mt-1 text-[0.65rem] uppercase tracking-[0.14em]",
-                product.stock > 0 ? "text-gold" : "text-red-300",
+                product.stock > 0 ? "text-forest" : "text-red-300",
               )}
             >
               {product.stock > 0 ? "En stock" : "Agotado"}
@@ -64,9 +66,9 @@ export function ProductCard({
           saved ? `Quitar ${product.name} de deseos` : `Guardar ${product.name} en deseos`
         }
         onClick={() => toggle(product.id)}
-        className="absolute right-3 top-3 bg-ink/70 p-2 text-ivory hover:text-gold"
+        className="absolute right-3 top-3 bg-canvas/70 p-2 text-ink hover:text-forest"
       >
-        <Heart className={cn("h-4 w-4", saved && "fill-gold text-gold")} />
+        <Heart className={cn("h-4 w-4", saved && "fill-forest text-forest")} />
       </button>
     </article>
   );
