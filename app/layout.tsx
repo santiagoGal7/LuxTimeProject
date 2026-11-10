@@ -1,0 +1,27 @@
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import "@fontsource/outfit/latin-400.css";
+import "@fontsource/outfit/latin-500.css";
+import "@fontsource/cormorant-garamond/latin-500.css";
+import "@fontsource/cormorant-garamond/latin-600.css";
+import { SiteFrame } from "@/components/site-frame";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: {
+    default: "LuxTime",
+    template: "%s · LuxTime",
+  },
+  description:
+    "LuxTime es el atelier de relojería de Ginebra. Catálogo, fichas técnicas, pedido simulado y panel de taller.",
+};
+
+export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+  return (
+    <html lang="es">
+      <body className="font-sans antialiased">
+        <SiteFrame>{children}</SiteFrame>
+      </body>
+    </html>
+  );
+}
