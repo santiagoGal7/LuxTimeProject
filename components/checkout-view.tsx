@@ -154,7 +154,7 @@ export function CheckoutView() {
         {error ? <p className="text-sm text-red-300">{error}</p> : null}
         <Button type="submit">Confirmar simulación · {cardBrand(form.watch("cardNumber"))}</Button>
       </form>
-      <aside className="h-fit border border-forest/30 p-6">
+      <aside className="plate h-fit p-6">
         <h2 className="font-display text-3xl">A pagar</h2>
         <ul className="mt-4 space-y-3 text-sm">
           {summary.lines.map((line) => (

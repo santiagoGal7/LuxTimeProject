@@ -120,7 +120,7 @@ export function AdminDashboard() {
           ["Unidades", String(units)],
           ["Agotadas", String(soldOut.length)],
         ].map(([label, value]) => (
-          <div key={label} className="bg-canvas p-5">
+          <div key={label} className="plate bg-canvas p-5">
             <dt className="text-[0.65rem] uppercase tracking-[0.16em] text-mute">{label}</dt>
             <dd className="mt-2 font-display text-4xl">{value}</dd>
           </div>

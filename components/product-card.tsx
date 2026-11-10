@@ -3,7 +3,9 @@
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { Money } from "@/components/money";
+import { QuickView } from "@/components/quick-view";
 import { useStoreHydrated } from "@/lib/use-hydrated";
 import { materialLabel, movementLabel } from "@/lib/labels";
 import { useLuxStore } from "@/lib/store";
@@ -21,11 +23,13 @@ export function ProductCard({
   const wished = useLuxStore((state) => state.wishlist.includes(product.id));
   const toggle = useLuxStore((state) => state.toggleWishlist);
   const saved = hydrated && wished;
+  const [quick, setQuick] = useState(false);
 
   return (
-    <article className="group relative">
-      <Link href={`/producto/${product.slug}`} className="block">
-        <div className="relative aspect-[4/5] overflow-hidden bg-forest/10">
+    <article className="plate group relative p-3">
+      <QuickView product={product} open={quick} onOpenChange={setQuick} />
+      <div className="plate relative aspect-[4/5] overflow-hidden bg-forest/10">
+        <Link href={`/producto/${product.slug}`} className="absolute inset-0" aria-label={product.name}>
           <Image
             src={product.images[0] ?? "/media/silver.webp"}
             alt={`${product.name} de ${product.brand}`}
@@ -41,8 +45,12 @@ export function ProductCard({
             sizes="(max-width: 768px) 50vw, 33vw"
             className="object-cover opacity-0 transition duration-700 group-hover:opacity-100"
           />
-          <span className="badge absolute bottom-3 left-3 bg-canvas/80">Vista rápida</span>
-        </div>
+        </Link>
+        <button type="button" className="badge absolute bottom-3 left-3 z-10" onClick={() => setQuick(true)}>
+          Vista rápida
+        </button>
+      </div>
+      <Link href={`/producto/${product.slug}`} className="block">
         <div className="mt-3 flex items-start justify-between gap-3 border-t border-line/20 pt-3">
           <div>
             <p className="text-[0.65rem] uppercase tracking-[0.18em] text-forest">
@@ -74,7 +82,7 @@ export function ProductCard({
           saved ? `Quitar ${product.name} de deseos` : `Guardar ${product.name} en deseos`
         }
         onClick={() => toggle(product.id)}
-        className="absolute right-3 top-3 bg-canvas/70 p-2 text-ink hover:text-forest"
+        className="plate absolute right-5 top-5 bg-canvas/80 p-2 text-ink hover:text-forest"
       >
         <Heart className={cn("h-4 w-4", saved && "fill-forest text-forest")} />
       </button>

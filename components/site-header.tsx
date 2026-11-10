@@ -1,9 +1,10 @@
 "use client";
 
 import { Heart, Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { CartDrawer } from "@/components/cart-drawer";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
@@ -33,7 +34,6 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [scrolled, setScrolled] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [mega, setMega] = useState(false);
   const count = hydrated ? cartCount(cart) : 0;
@@ -43,25 +43,11 @@ export function SiteHeader() {
     [overrides, customProducts],
   );
   const results = query.trim() ? filterProducts(products, { q: query }).slice(0, 6) : [];
-  const overFilm = pathname === "/" && !scrolled;
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   if (pathname.startsWith("/admin")) return null;
 
   return (
     <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-40 border-b backdrop-blur-md transition-colors duration-300",
-        overFilm
-          ? "border-transparent bg-transparent text-[#f4efe6]"
-          : "border-line/25 bg-canvas/90 text-ink",
-      )}
+      className="fixed inset-x-0 top-0 z-40 border-b border-line/25 bg-canvas/90 text-ink backdrop-blur-md"
     >
       <div className="mx-auto flex h-16 max-w-page items-center gap-4 px-4 sm:px-6 md:px-8 xl:px-10">
         <button
@@ -87,31 +73,33 @@ export function SiteHeader() {
                 <Link
                   href={link.href}
                   className={cn(
-                    "text-[0.68rem] uppercase tracking-[0.18em]",
-                    overFilm ? "text-[#f4efe6]/80 hover:text-[#e7d7c1]" : "text-ink/70 hover:text-forest",
-                    pathname.startsWith(link.href) && (overFilm ? "text-[#e7d7c1]" : "text-forest"),
+                    "text-[0.68rem] uppercase tracking-[0.18em] text-ink/70 hover:text-forest",
+                    pathname.startsWith(link.href) && "text-forest",
                   )}
                   aria-expanded={mega}
                 >
                   {link.label}
                 </Link>
                 {mega ? (
-                  <div className="absolute left-0 top-full z-50 w-[28rem] bg-canvas p-4 text-ink shadow-line">
+                  <div className="plate absolute left-0 top-full z-50 w-[min(40rem,72vw)] bg-canvas p-4 text-ink">
                     <p className="text-[0.65rem] uppercase tracking-[0.16em] text-brass">Colecciones</p>
-                    <div className="mt-3 grid grid-cols-2 gap-2">
+                    <div className="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
                       {[
-                        ["clasica", "Clásica"],
-                        ["sport", "Sport"],
-                        ["alta", "Alta relojería"],
-                        ["heritage", "Heritage"],
-                      ].map(([id, label]) => (
+                        ["clasica", "Clásica", "/media/silver.webp"],
+                        ["sport", "Sport", "/media/sport.webp"],
+                        ["alta", "Alta relojería", "/media/gold.webp"],
+                        ["heritage", "Heritage", "/media/pocket.webp"],
+                      ].map(([id, label, image]) => (
                         <Link
                           key={id}
                           href={`/catalogo?coleccion=${id}`}
-                          className="border border-line/20 px-3 py-3 text-sm hover:border-forest hover:text-forest"
+                          className="group block"
                           onClick={() => setMega(false)}
                         >
-                          {label}
+                          <span className="plate relative block aspect-[3/4] overflow-hidden">
+                            <Image src={image} alt="" fill className="object-cover transition duration-500 group-hover:scale-105" sizes="160px" />
+                          </span>
+                          <span className="mt-2 block text-sm">{label}</span>
                         </Link>
                       ))}
                     </div>
@@ -123,9 +111,8 @@ export function SiteHeader() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "text-[0.68rem] uppercase tracking-[0.18em]",
-                  overFilm ? "text-[#f4efe6]/80 hover:text-[#e7d7c1]" : "text-ink/70 hover:text-forest",
-                  pathname.startsWith(link.href) && (overFilm ? "text-[#e7d7c1]" : "text-forest"),
+                  "text-[0.68rem] uppercase tracking-[0.18em] text-ink/70 hover:text-forest",
+                  pathname.startsWith(link.href) && "text-forest",
                 )}
               >
                 {link.label}

@@ -16,7 +16,7 @@ export function CartDrawer({ open, onOpenChange }: { open: boolean; onOpenChange
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="left-auto right-4 top-20 max-h-[80vh] w-[min(100%-2rem,24rem)] translate-x-0 translate-y-0 overflow-auto">
+      <DialogContent className="!left-auto !right-0 !top-0 h-full max-h-none w-[min(100%,24rem)] !translate-x-0 !translate-y-0 overflow-auto">
         <DialogTitle>Pedido</DialogTitle>
         {summary.lines.length === 0 ? (
           <p className="mt-6 text-sm text-mute">El pedido está vacío.</p>

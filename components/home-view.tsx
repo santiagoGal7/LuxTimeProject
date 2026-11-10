@@ -45,16 +45,10 @@ const MARQUEE = [
 
 export function HomeView() {
   const [webgl, setWebgl] = useState(false);
-  const [motionOk, setMotionOk] = useState(false);
   const featured = SEED_PRODUCTS.filter((product) => product.featured);
 
   useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const narrow = window.matchMedia("(max-width: 767px)").matches;
-    const startFilm = () => {
-      if (!reduce && !narrow) setMotionOk(true);
-    };
-    const idle = window.requestIdleCallback?.(startFilm) ?? window.setTimeout(startFilm, 900);
     try {
       const canvas = document.createElement("canvas");
       setWebgl(
@@ -63,73 +57,51 @@ export function HomeView() {
     } catch {
       setWebgl(false);
     }
-    return () => {
-      if (typeof idle === "number") window.clearTimeout(idle);
-      else window.cancelIdleCallback?.(idle);
-    };
   }, []);
 
   return (
     <div>
-      <section className="relative -mt-16 min-h-[100svh] overflow-hidden text-[#f4efe6]">
-        <Image
-          src="/media/chrono.webp"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-        {motionOk ? (
-          <video
-            className="absolute inset-0 h-full w-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="none"
-            aria-hidden
-          >
-            <source src="/media/hero.mp4" type="video/mp4" />
-          </video>
-        ) : null}
-        <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(10,22,20,0.88)_0%,rgba(10,22,20,0.42)_48%,rgba(10,22,20,0.2)_100%)]" />
-        <div className="relative mx-auto flex min-h-[100svh] w-full max-w-page flex-col justify-end px-4 pb-14 pt-28 sm:px-6 md:px-8 md:pb-16 xl:px-10">
-          <div className="max-w-3xl">
-            <p className="text-[0.68rem] uppercase tracking-[0.22em] text-[#e7d7c1]">
+      <section className="relative -mt-16 min-h-[100svh] overflow-hidden bg-canvas text-ink">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(520px_320px_at_80%_40%,rgb(var(--metal)/0.18),transparent_70%)]" />
+        <div className="relative mx-auto grid min-h-[100svh] w-full max-w-page items-center gap-10 px-4 pb-16 pt-28 sm:px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] md:px-8 xl:px-10">
+          <div className="max-w-xl">
+            <p className="text-[0.68rem] uppercase tracking-[0.22em] text-brass">
               Atelier de Ginebra · desde 1940
             </p>
             <SplitText
               as="h1"
               text="Relojes construidos para quedarse en la muñeca décadas."
-              className="mt-4 max-w-xl text-balance font-display text-[2.6rem] leading-[0.95] sm:text-6xl lg:text-7xl"
+              className="mt-4 text-balance font-display text-[2.5rem] leading-[0.95] text-ink sm:text-6xl lg:text-7xl"
             />
-            <p className="mt-6 max-w-md text-pretty text-base leading-7 text-[#f4efe6]/80">
+            <p className="mt-6 max-w-md text-pretty text-base leading-7 text-ink/75">
               LuxTime fabrica calibres propios en series cortas. Cada referencia sale con
               certificado, reserva de marcha declarada y grabado opcional.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Magnetic>
-                <Button
-                  asChild
-                  className="w-full border-[#e7d7c1] text-[#e7d7c1] hover:bg-[#e7d7c1] hover:text-[#10211c] sm:w-auto"
-                >
+                <Button asChild className="w-full sm:w-auto">
                   <Link href="/catalogo">Explorar catálogo</Link>
                 </Button>
               </Magnetic>
               <Magnetic>
-                <Button
-                  asChild
-                  variant="quiet"
-                  className="w-full border-[#f4efe6]/30 text-[#f4efe6] hover:border-[#e7d7c1] hover:text-[#e7d7c1] sm:w-auto"
-                >
+                <Button asChild variant="quiet" className="w-full sm:w-auto">
                   <Link href="/historia">La historia del taller</Link>
                 </Button>
               </Magnetic>
             </div>
           </div>
+          <div className="plate relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden bg-canvas-2">
+            <Image
+              src="/media/gold.webp"
+              alt="Reloj de oro del salón, sobre marfil"
+              fill
+              priority
+              sizes="(max-width: 768px) 90vw, 40vw"
+              className="object-cover"
+            />
+          </div>
         </div>
-        <dl className="relative mx-auto grid w-full max-w-page grid-cols-2 gap-4 border-t border-[#e7d7c1]/30 px-4 py-5 sm:px-6 md:grid-cols-4 md:px-8 xl:px-10">
+        <dl className="relative mx-auto grid w-full max-w-page grid-cols-2 gap-4 border-t border-brass/40 px-4 py-5 sm:px-6 md:grid-cols-4 md:px-8 xl:px-10">
           {[
             ["1940", "Fundación"],
             ["26", "Referencias"],
@@ -137,10 +109,8 @@ export function HomeView() {
             ["10", "Sedes"],
           ].map(([value, label]) => (
             <div key={label}>
-              <dt className="text-[0.65rem] uppercase tracking-[0.16em] text-[#f4efe6]/60">
-                {label}
-              </dt>
-              <dd className="mt-1 font-display text-3xl">{value}</dd>
+              <dt className="text-[0.65rem] uppercase tracking-[0.16em] text-mute">{label}</dt>
+              <dd className="mt-1 font-display text-3xl text-ink">{value}</dd>
             </div>
           ))}
         </dl>

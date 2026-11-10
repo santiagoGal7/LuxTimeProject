@@ -93,7 +93,7 @@ export function CartView() {
           </ul>
         )}
       </div>
-      <aside className="h-fit border border-forest/30 p-6">
+      <aside className="plate h-fit p-6">
         <h2 className="font-display text-3xl">Resumen</h2>
         <dl className="mt-6 space-y-3 text-sm">
           <div className="flex justify-between">
